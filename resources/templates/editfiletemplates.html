@@ -1,0 +1,29 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+
+<div>
+    <form method="POST" enctype="multipart/form-data" action="handlefileupload">
+        <table>
+            <tr><td>Выберете файл:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td>Имя файла:</td><td><input type="text" name="filename" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
+</div>
+
+<h5>Список доступных </h5>
+<form method="post" th:if="${not #lists.isEmpty(claimTemplatesList)}" >
+    <div th:each="item : ${claimTemplatesList}">
+        <input type="checkbox" name="claimTemplate" th:id="${item.getId()}" th:value="${item.getId()}">
+        <label th:for="${item.getId()}" th:text="${item.filename}"></label>
+    </div>
+    <input type="submit" value="Удалить" formaction="deletefiletemplate">
+</form>
+<div th:unless="${not #lists.isEmpty(claimTemplatesList)}">Шаблоны в базе данных отсутствуют.</div>
+
+
+</body>
+</html>

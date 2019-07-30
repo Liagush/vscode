@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/static/sass/main.css">
+
+</head>
+<body>
+
+<div>
+    <form id="producteditingform" action="producteditingform" method="post">
+
+        <div class="addOneProduct">
+            <h5>Загрузка списка товаров</h5>
+            <input type="file">
+            <input type="button" value="Загрузить список" onclick="readListProduct();">
+            <input type="button" value="Добавить товар" onclick="addOneProduct();">
+            <br>
+        </div>
+
+        <div class="productEditList">
+
+        </div>
+
+        <h5>Выбор категории товаров</h5>
+        <div class="listCategory active">
+            <select name="categoryId" th:if="${not #lists.isEmpty(categories)}">
+                <option selected value> -- выберите категорию -- </option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.category}"></option>
+                <br>
+            </select>
+            <p th:unless="${not #lists.isEmpty(categories)}">Категории в базе данных отсутствуют.</p>
+            <input type="button" value="добавить новую категорию" onclick="switchOnAddNewCategoryProduct();">
+        </div>
+        <div class="addNewCategory">
+            <lable for="categoryName">Название новой категории товаров</lable>
+            <input id="categoryName">
+            <br>
+            <input type="button" value="Выбрать категорию из базы данных" onclick="switchOnListCategoryProduct();">
+        </div>
+
+
+        <input type="submit" value="Отправить форму">
+    </form>
+    <br>
+
+    <tr th:each="prod : ${products}">
+        <td th:text="${prod.id}"></td>
+        <td th:text="${prod.vendorCode}"></td>
+        <td th:text="${prod.productName}"></td>
+        <br>
+    </tr>
+</div>
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src="/static/js/editProduct.js"></script>
+<script src="/static/js/addCategory.js"></script>
+<script src="/static/js/papaparse.js"></script>
+</body>
+</html>
